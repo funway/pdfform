@@ -28,7 +28,7 @@ public class App {
     }
 
     public static void testExtracting() throws IOException {
-        String src = "/Users/funway/Downloads/imm5257e.pdf";
+        String src = "../assets/imm5645e.pdf";
         
         Path srcPath = Paths.get(src);
         Path destItext = srcPath.getParent().resolve(srcPath.getFileName() + "_extracted_itext");
@@ -44,7 +44,7 @@ public class App {
     }
 
     public static void testFilling() throws FileNotFoundException {
-        String src = "/Users/funway/Downloads/imm5645e.pdf";
+        String src = "../assets/imm5645e.pdf";
         Path srcPath = Paths.get(src);
 
         String destItext = src.replace(".pdf", "_edited_itext.pdf");
