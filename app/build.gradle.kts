@@ -32,6 +32,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
     implementation("com.github.librepdf:openpdf:1.3.34")
+    
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+    // implementation("org.bouncycastle:bcprov-jdk18on:1.76")
 
     // https://mvnrepository.com/artifact/commons-cli/commons-cli
     implementation("commons-cli:commons-cli:1.5.0")
@@ -53,4 +56,19 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+
+// 打包成可执行的 fat jar 包
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = application.mainClass
+    }
+    val dependencies = configurations
+        .runtimeClasspath
+        .get()
+        .map(::zipTree) // OR .map { zipTree(it) }
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    excludes += listOf("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
 }
