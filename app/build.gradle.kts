@@ -33,6 +33,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
     implementation("com.github.librepdf:openpdf:1.3.34")
 
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    implementation("commons-cli:commons-cli:1.5.0")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

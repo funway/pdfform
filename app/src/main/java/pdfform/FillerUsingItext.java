@@ -36,15 +36,15 @@ public class FillerUsingItext {
             System.out.println("Data Node: <" + dataNode.getNodeName() + ">");
 
             // Edit the Dom elements
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            String expression = "/datasets/data/IMM_5645/page1/Subform1/Student";
-            Node node = (Node) xPath.compile(expression).evaluate(document, XPathConstants.NODE);
-            if (node != null) {
-                System.out.println("Found node: " + node.getNodeName() + " = " + node.getTextContent());
-                node.setTextContent("1");
-            } else {
-                System.out.println("Cannot found node: " + expression);
-            }
+            // XPath xPath = XPathFactory.newInstance().newXPath();
+            // String expression = "/datasets/data/IMM_5645/page1/Subform1/Student";
+            // Node node = (Node) xPath.compile(expression).evaluate(document, XPathConstants.NODE);
+            // if (node != null) {
+            //     System.out.println("Found node: " + node.getNodeName() + " = " + node.getTextContent());
+            //     node.setTextContent("1");
+            // } else {
+            //     System.out.println("Cannot found node: " + expression);
+            // }
 
             fillXfaData(src, dest, dataNode);
         } catch (Exception e) {

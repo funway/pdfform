@@ -8,3 +8,5 @@ build
 .idea/
 .svn/
 .vscode/
+assets/*/*.xml
+assets/*/*.txt
