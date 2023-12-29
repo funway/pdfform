@@ -49,6 +49,7 @@ public class ExtractorUsingOpenpdf {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
     }
@@ -104,6 +105,7 @@ public class ExtractorUsingOpenpdf {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 }

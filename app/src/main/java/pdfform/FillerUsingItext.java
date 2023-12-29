@@ -20,7 +20,8 @@ import org.w3c.dom.Node;
 
 public class FillerUsingItext {
 
-    public static void fillXfaData(String src, String dest, InputStream is) {
+    public static void fillXfaData(String src, String dest, InputStream is) throws Exception {
+        System.out.println("Fillout by Itext");
         System.out.println("src: " + src);
         System.out.println("dest: " + dest);
 
@@ -48,12 +49,12 @@ public class FillerUsingItext {
 
             fillXfaData(src, dest, dataNode);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
 
     }
 
-    public static void fillXfaData(String src, String dest, Node node) {
+    public static void fillXfaData(String src, String dest, Node node) throws Exception {
         System.out.println("Node name: " + node.getNodeName());
         if (node.getNodeName() != "xfa:data") {
             throw new IllegalArgumentException("Node is not <xfa:data>.");
@@ -78,7 +79,7 @@ public class FillerUsingItext {
 
             pdfDoc.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 }

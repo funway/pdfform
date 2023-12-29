@@ -116,6 +116,7 @@ public class App {
             
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
         ExtractorUsingOpenpdf.extractAcroformFields(src, destPath.resolve("acrofields.txt").toString());
@@ -123,47 +124,12 @@ public class App {
         ExtractorUsingOpenpdf.extractXfa(src, destPath.toString());
     }
 
-
-    public static void testExtracting() throws IOException {
-        String src = "../assets/imm5257e.pdf";
-        
-        Path srcPath = Paths.get(src);
-        Path destItext = srcPath.getParent().resolve(com.google.common.io.Files.getNameWithoutExtension(src) + "_extracted_itext");
-        Path destOpenpdf = srcPath.getParent().resolve(com.google.common.io.Files.getNameWithoutExtension(src) + "_extracted_openpdf");
-
-        Files.createDirectories(destItext);
-        Files.createDirectories(destOpenpdf);
-
-        ExtractorUsingItext.extractAcroformFields(src, destItext.resolve("acrofields.txt").toString());
-        ExtractorUsingOpenpdf.extractAcroformFields(src, destOpenpdf.resolve("acrofields.txt").toString());
-
-        ExtractorUsingItext.extractXfa(src, destItext.toString());
-        ExtractorUsingOpenpdf.extractXfa(src, destOpenpdf.toString());
-    }
-
-    public static void testFilling() throws FileNotFoundException {
-        String src = "../assets/imm5645e.pdf";
-        Path srcPath = Paths.get(src);
-
-        String destItext = src.replace(".pdf", "_edited_itext.pdf");
-        String destOpenpdf = src.replace(".pdf", "_edited_openpdf.pdf");
-
-        String xmlItext = srcPath.getParent()
-            .resolve(srcPath.getFileName() + "_extracted_itext")
-            .resolve("xfa_datasets.xml").toString();
-        String xmlOpenpdf = srcPath.getParent()
-            .resolve(srcPath.getFileName() + "_extracted_openpdf")
-            .resolve("xfa_datasets.xml").toString();
-        
-        FillerUsingItext.fillXfaData(src, destItext, new FileInputStream(xmlItext));
-        FillerUsingOpenpdf.fillXfaData(src, destOpenpdf, new FileInputStream(xmlOpenpdf));
-    }
-
     public static void filloutPDF(String src, String xml, String output) {
         try {
             FillerUsingOpenpdf.fillXfaData(src, output, new FileInputStream(xml));
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 }
