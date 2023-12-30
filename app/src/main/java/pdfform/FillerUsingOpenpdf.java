@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,6 +44,11 @@ public class FillerUsingOpenpdf {
             throw new IllegalArgumentException("Node is not <xfa:data>.");
         }
 
+        Node dataNode = getFirstElementNode(node);
+        if (dataNode == null) {
+            throw new Exception("No valid element found under the given node.");
+        }
+
         try (PdfReader reader = new PdfReader(src)) {
             // using append mode to keep old pdf's encryption and some other attribute.
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest), '\0', true);
@@ -50,10 +56,23 @@ public class FillerUsingOpenpdf {
             AcroFields fields = stamper.getAcroFields();
             XfaForm xfa = fields.getXfa();
 
-            xfa.fillXfaForm(node);
+            xfa.fillXfaForm(dataNode);
             stamper.close();
         } catch (Exception e) {
             throw e;
         }
     }
+
+    private static Node getFirstElementNode(Node node) {
+        NodeList nodeList = node.getChildNodes();
+
+        for(int i=0; i<nodeList.getLength(); i++) {
+            Node chilNode = nodeList.item(i);
+            if (chilNode.getNodeType() == Node.ELEMENT_NODE) {
+                return chilNode;
+            }
+        }
+        return null;
+    }
+
 }

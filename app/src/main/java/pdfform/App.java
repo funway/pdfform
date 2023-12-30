@@ -119,14 +119,14 @@ public class App {
             System.exit(1);
         }
 
-        ExtractorUsingOpenpdf.extractAcroformFields(src, destPath.resolve("acrofields.txt").toString());
+        ExtractorUsingItext.extractAcroformFields(src, destPath.resolve("acrofields.txt").toString());
 
-        ExtractorUsingOpenpdf.extractXfa(src, destPath.toString());
+        ExtractorUsingItext.extractXfa(src, destPath.toString());
     }
 
     public static void filloutPDF(String src, String xml, String output) {
         try {
-            FillerUsingOpenpdf.fillXfaData(src, output, new FileInputStream(xml));
+            FillerUsingItext.fillXfaData(src, output, new FileInputStream(xml));
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

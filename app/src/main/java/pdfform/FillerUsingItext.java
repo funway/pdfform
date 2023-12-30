@@ -17,6 +17,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class FillerUsingItext {
 
@@ -60,6 +61,12 @@ public class FillerUsingItext {
             throw new IllegalArgumentException("Node is not <xfa:data>.");
         }
 
+        // Get first ELEMENT_NODE (exclude TEXT_NODE, COMMENT_NODE ...)
+        Node dataNode = getFirstElementNode(node);
+        if (dataNode == null) {
+            throw new Exception("No valid element found under the given node.");
+        }
+
         try (PdfReader reader = new PdfReader(src);
             PdfWriter writer = new PdfWriter(dest)) {
 
@@ -74,7 +81,7 @@ public class FillerUsingItext {
             PdfAcroForm acroForm = PdfAcroForm.getAcroForm(pdfDoc, true);
             XfaForm xfa = acroForm.getXfaForm();
 
-            xfa.fillXfaForm(node);
+            xfa.fillXfaForm(dataNode);
             xfa.write(pdfDoc);
 
             pdfDoc.close();
@@ -82,4 +89,17 @@ public class FillerUsingItext {
             throw e;
         }
     }
+
+    private static Node getFirstElementNode(Node node) {
+        NodeList nodeList = node.getChildNodes();
+
+        for(int i=0; i<nodeList.getLength(); i++) {
+            Node chilNode = nodeList.item(i);
+            if (chilNode.getNodeType() == Node.ELEMENT_NODE) {
+                return chilNode;
+            }
+        }
+        return null;
+    }
+    
 }
